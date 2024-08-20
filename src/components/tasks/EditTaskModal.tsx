@@ -32,7 +32,8 @@ export default function EditTaskModal({ data, taskId }: EditTaskModalProps) {
             toast.error(error.message)
         },
         onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: ['editProject', projectId]})
+            queryClient.invalidateQueries({ queryKey: ['project', projectId]})
+            queryClient.invalidateQueries({ queryKey: ['task', taskId]})
             toast.success(data)
             reset()
             navigate(location.pathname, {replace: true})
@@ -85,13 +86,13 @@ export default function EditTaskModal({ data, taskId }: EditTaskModalProps) {
                                 <form
                                     className="mt-10 space-y-3"
                                     noValidate
+                                    onSubmit={handleSubmit(handleEditTask)}
                                 >
                     
                                 <TaskForm register={register} errors={errors} />
                     
                                     <input
                                         type="submit"
-                                        onSubmit={handleSubmit(handleEditTask)}
                                         className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3  text-white font-black  text-xl cursor-pointer"
                                         value='Guardar Tarea'
                                     />
